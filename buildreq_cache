@@ -1,0 +1,7 @@
+2.22
+perl(Capture::Tiny)
+perl(Class::MethodMaker)
+perl(Sub::Uplevel)
+perl(Term::ReadKey)
+perl(Test::Exception)
+perl(Test::Warnings)

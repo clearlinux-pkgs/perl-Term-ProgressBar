@@ -4,14 +4,14 @@
 #
 Name     : perl-Term-ProgressBar
 Version  : 2.22
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libterm-progressbar-perl/libterm-progressbar-perl_2.22-1.debian.tar.xz
 Summary  : 'provide a progress meter on a standard terminal'
 Group    : Development/Tools
 License  : Artistic-1.0-Perl
-Requires: perl-Term-ProgressBar-man
+BuildRequires : buildreq-cpan
 BuildRequires : perl(Capture::Tiny)
 BuildRequires : perl(Class::MethodMaker)
 BuildRequires : perl(Sub::Uplevel)
@@ -24,19 +24,20 @@ Module Term-ProgressBar (2.09):
 Description:
 A progress bar for things that take a while.  It looks like
 
-%package man
-Summary: man components for the perl-Term-ProgressBar package.
-Group: Default
+%package dev
+Summary: dev components for the perl-Term-ProgressBar package.
+Group: Development
+Provides: perl-Term-ProgressBar-devel = %{version}-%{release}
 
-%description man
-man components for the perl-Term-ProgressBar package.
+%description dev
+dev components for the perl-Term-ProgressBar package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Term-ProgressBar-2.22
-mkdir -p %{_topdir}/BUILD/Term-ProgressBar-2.22/deblicense/
+cd ..
+%setup -q -T -D -n Term-ProgressBar-2.22 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Term-ProgressBar-2.22/deblicense/
 
 %build
@@ -62,9 +63,9 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -73,10 +74,10 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Term/ProgressBar.pm
-/usr/lib/perl5/site_perl/5.26.1/Term/ProgressBar/IO.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Term/ProgressBar.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Term/ProgressBar/IO.pm
 
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Term::ProgressBar.3
 /usr/share/man/man3/Term::ProgressBar::IO.3
