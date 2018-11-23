@@ -4,7 +4,7 @@
 #
 Name     : perl-Term-ProgressBar
 Version  : 2.22
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libterm-progressbar-perl/libterm-progressbar-perl_2.22-1.debian.tar.xz
@@ -74,8 +74,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.26.1/Term/ProgressBar.pm
-/usr/lib/perl5/vendor_perl/5.26.1/Term/ProgressBar/IO.pm
+/usr/lib/perl5/vendor_perl/5.28.0/Term/ProgressBar.pm
+/usr/lib/perl5/vendor_perl/5.28.0/Term/ProgressBar/IO.pm
 
 %files dev
 %defattr(-,root,root,-)
