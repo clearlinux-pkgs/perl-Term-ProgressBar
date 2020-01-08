@@ -4,13 +4,15 @@
 #
 Name     : perl-Term-ProgressBar
 Version  : 2.22
-Release  : 9
+Release  : 10
 URL      : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libterm-progressbar-perl/libterm-progressbar-perl_2.22-1.debian.tar.xz
 Summary  : 'provide a progress meter on a standard terminal'
 Group    : Development/Tools
-License  : Artistic-1.0-Perl
+License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
+Requires: perl-Term-ProgressBar-license = %{version}-%{release}
+Requires: perl-Term-ProgressBar-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(Capture::Tiny)
 BuildRequires : perl(Class::MethodMaker)
@@ -28,23 +30,42 @@ A progress bar for things that take a while.  It looks like
 Summary: dev components for the perl-Term-ProgressBar package.
 Group: Development
 Provides: perl-Term-ProgressBar-devel = %{version}-%{release}
+Requires: perl-Term-ProgressBar = %{version}-%{release}
 
 %description dev
 dev components for the perl-Term-ProgressBar package.
 
 
+%package license
+Summary: license components for the perl-Term-ProgressBar package.
+Group: Default
+
+%description license
+license components for the perl-Term-ProgressBar package.
+
+
+%package perl
+Summary: perl components for the perl-Term-ProgressBar package.
+Group: Default
+Requires: perl-Term-ProgressBar = %{version}-%{release}
+
+%description perl
+perl components for the perl-Term-ProgressBar package.
+
+
 %prep
 %setup -q -n Term-ProgressBar-2.22
-cd ..
-%setup -q -T -D -n Term-ProgressBar-2.22 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libterm-progressbar-perl_2.22-1.debian.tar.xz
+cd %{_builddir}/Term-ProgressBar-2.22
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Term-ProgressBar-2.22/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Term-ProgressBar-2.22/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -54,7 +75,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -62,6 +83,8 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Term-ProgressBar
+cp %{_builddir}/Term-ProgressBar-2.22/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Term-ProgressBar/6b82dd97700b37596cd3816893ddfc6d34a73081
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -74,10 +97,17 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Term/ProgressBar.pm
-/usr/lib/perl5/vendor_perl/5.28.2/Term/ProgressBar/IO.pm
 
 %files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Term::ProgressBar.3
 /usr/share/man/man3/Term::ProgressBar::IO.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Term-ProgressBar/6b82dd97700b37596cd3816893ddfc6d34a73081
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Term/ProgressBar.pm
+/usr/lib/perl5/vendor_perl/5.30.1/Term/ProgressBar/IO.pm
