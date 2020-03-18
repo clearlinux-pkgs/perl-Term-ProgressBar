@@ -4,7 +4,7 @@
 #
 Name     : perl-Term-ProgressBar
 Version  : 2.22
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.22.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libterm-progressbar-perl/libterm-progressbar-perl_2.22-1.debian.tar.xz
@@ -84,7 +84,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Term-ProgressBar
-cp %{_builddir}/Term-ProgressBar-2.22/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Term-ProgressBar/6b82dd97700b37596cd3816893ddfc6d34a73081
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-Term-ProgressBar/6b82dd97700b37596cd3816893ddfc6d34a73081
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -109,5 +109,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/Term/ProgressBar.pm
-/usr/lib/perl5/vendor_perl/5.30.1/Term/ProgressBar/IO.pm
+/usr/lib/perl5/vendor_perl/5.30.2/Term/ProgressBar.pm
+/usr/lib/perl5/vendor_perl/5.30.2/Term/ProgressBar/IO.pm
