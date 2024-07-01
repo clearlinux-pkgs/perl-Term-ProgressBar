@@ -4,7 +4,7 @@
 #
 Name     : perl-Term-ProgressBar
 Version  : 2.23
-Release  : 19
+Release  : 20
 URL      : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.23.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-2.23.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libterm-progressbar-perl/libterm-progressbar-perl_2.22-1.debian.tar.xz
